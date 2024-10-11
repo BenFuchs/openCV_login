@@ -1,6 +1,7 @@
 import cv2
 import os
 import numpy as np
+import pickle
 
 # Initialize face recognizer and face detector
 recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -61,6 +62,16 @@ dataset_path = 'dataset'
 
 # Prepare training data
 faces, labels = prepare_training_data(dataset_path)
+
+# Save the faces and labels to a pickle file
+with open('faces_labels.pkl', 'wb') as f:
+    pickle.dump((faces, labels), f)
+
+print("Data saved to faces_labels.pkl")
+
+# To load the data back, you can use:
+# with open('faces_labels.pkl', 'rb') as f:
+#     faces, labels = pickle.load(f)
 
 # Train the recognizer
 recognizer.train(faces, np.array(labels))
